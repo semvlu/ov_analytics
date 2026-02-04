@@ -4,7 +4,7 @@ import math
 
 os.chdir("../data/lake/")
 
-tab = duckdb.read_parquet("part-00000-21f0573e-fa95-421d-9b8f-46b811121441-c000.snappy.parquet")
+tab = duckdb.read_parquet("part-00000-4567c5c2-6767-412f-9ddc-41a3f7820cff-c000.snappy.parquet")
 
 tab.show()
 for i in range(len(tab.columns)):

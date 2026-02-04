@@ -41,8 +41,12 @@ spark = SparkSession.builder \
     .master("local[*]") \
     .config(conf=conf) \
     .config("spark.ui.host", "0.0.0.0") \
-    .config("spark.jars.packages", "org.apache.spark:spark-sql-kafka-0-10_2.13:4.0.1") \
+    .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
+    .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
+    .config("spark.jars.packages", "io.delta:delta-spark_2.13:4.0.1,org.apache.spark:spark-sql-kafka-0-10_2.13:4.0.1") \
     .getOrCreate()
+
+print(spark.sparkContext.getConf().get("spark.jars.packages"))
 
 df = spark.readStream \
     .format("kafka") \
@@ -143,7 +147,8 @@ parsed_df = (
 )
 
 
-
+# Raw Parquet
+'''
 query = parsed_df.writeStream \
     .outputMode("append") \
     .format("parquet") \
@@ -151,6 +156,15 @@ query = parsed_df.writeStream \
     .option("path", save_dir) \
     .start()
     # .partitionBy("lineplanningnumber", "journeynumber") \
+'''
+
+# Delta Lake
+query = parsed_df.writeStream \
+    .outputMode("append") \
+    .format("delta") \
+    .option("checkpointLocation", os.path.join(save_dir, "checkpoints")) \
+    .option("path", save_dir) \
+    .start()
     
 
 

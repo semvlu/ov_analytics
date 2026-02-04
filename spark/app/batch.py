@@ -20,7 +20,7 @@ spark = SparkSession.builder.appName("distance_batch") \
     .getOrCreate()
 
 
-df = spark.read.parquet("../data/lake")
+df = spark.read.format("delta").load("../data/lake")
 
 '''
 # Define window for lag
