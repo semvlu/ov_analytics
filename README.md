@@ -2,15 +2,15 @@
 
 Stream real-time data from NDOV (Nationale Data Openbaar Vervoer) Loket.
 
-PySpark: Store real-time data into Parquet data lake, batch process lake data into warehouse.
+PySpark: Store real-time data into Delta Lake, batch process lake data into warehouse.
 
 Prometheus and Grafana for real-time streaming logging and visualisation.
 
 Tools used:
 
-- Container: Docker
+- Container: Docker, Kubernetes
 - ETL: Kafka, Spark, ZeroMQ, DuckDB
-- Data Lake, Warehouse, OLAP: DuckDB, Parquet, ClickHouse
+- Data Lake, Warehouse, OLAP: Delta Lake, DuckDB, Parquet, ClickHouse
 - Log & Visualisation: Prometheus, Grafana
 - User-end API: TypeScript, Apollo Server, GraphQL
 
